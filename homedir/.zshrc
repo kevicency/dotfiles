@@ -2,7 +2,11 @@
 export ZSH=$HOME/.dotfiles/oh-my-zsh
 # if you want to use this, change your non-ascii font to Droid Sans Mono for Awesome
 # POWERLEVEL9K_MODE='awesome-patched'
+
 export ZSH_THEME="powerlevel10k/powerlevel10k"
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 # export ZSH_THEME="agnoster"
 # POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 # # https://github.com/bhilburn/powerlevel9k#customizing-prompt-segments
@@ -57,5 +61,7 @@ load-nvmrc
 # Customize to your needs...
 unsetopt correct
 
-# run fortune on new terminal :)
-# fortune
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+bindkey '^[[[CA' autosuggest-accept
+bindkey '^[[[CE' autosuggest-execute
