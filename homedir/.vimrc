@@ -69,6 +69,8 @@ Plugin 'SuperTab'
 " Vue.js
 Plugin 'posva/vim-vue'
 
+Plugin 'tomasiser/vim-code-dark'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -88,6 +90,7 @@ filetype plugin indent on    " required
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " global enable spell check
 "set spell spelllang=en_us   " spell check go to highlighted word and "z=" to see list to turn off set nospell
+colorscheme codedark
 setlocal spell spelllang=en_us
 setlocal spellfile=$HOME/.vim-spell-en.utf-8.add
 autocmd BufRead,BufNewFile *.md,*.txt setlocal spell  " enable spell check for certain files
@@ -109,6 +112,7 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 endif
+nnoremap <SPACE> <Nop>
 let mapleader=","
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -129,7 +133,7 @@ set sessionoptions+=winpos " What should be saved during sessions being saved
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set lsp=0 " space it out a little more (easier to read)
 set wildmenu " turn on wild menu
-set wildmode=list:longest " turn on wild menu in special format (long format)
+set wildmode=full " list:longest " turn on wild menu in special format (long format)
 set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.swp,*.jpg,*.gif,*.png " ignore formats
 set ruler " Always show current positions along the bottom
 set cmdheight=1 " the command bar is 1 high
@@ -150,7 +154,7 @@ set listchars=tab:>-,trail:- " show tabs and trailing whitespace
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showmatch " show matching brackets
 set mat=5 " how many tenths of a second to blink matching brackets for
-set nohlsearch " do not highlight searched for phrases
+set hlsearch " do not highlight searched for phrases
 set incsearch " BUT do highlight as you type you search phrase
 set so=5 " Keep 5 lines (top/bottom) for scope
 set novisualbell " don't blink
@@ -186,6 +190,7 @@ set completeopt=menu,longest,preview " improve the way autocomplete works
 set cursorcolumn " show the current column
 set cursorline
 " hi CursorLine term=underline ctermbg=008 guibg=#493a35
+set gdefault " global regex per default
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
@@ -245,6 +250,30 @@ endfunction
 " map <left> <ESC>:NERDTreeToggle<RETURN>  " moves left fa split
 " map <F2> <ESC>ggVG:call SuperRetab()<left>
 " map <F12> ggVGg? " apply rot13 for people snooping over shoulder, good fun
+noremap \ ,
+
+nnoremap <tab> %
+vnoremap <tab> %
+
+nmap <C-j> ]m
+nmap <C-k> [m
+
+nnoremap { [{
+nnoremap [{ {
+nnoremap } ]}
+nnoremap ]} }
+
+noremap ` '
+noremap ' `
+
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Useful abbrevs
@@ -290,11 +319,11 @@ vnoremap <silent> <leader>es :EsformatterVisual<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let NERDTreeShowHidden=1
+" let NERDTreeShowHidden=1
 "let NERDTreeIgnore=['\.DS_Store$']
 "" auto open if no file sent as arg
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | :NERDTree<CR> | endif
 "" Toggle NERDtree with C-n
 "map ,n <plug>NERDTreeTabsToggle<CR>
 "" Autoclose if only NERDtree is left
@@ -311,8 +340,8 @@ let g:netrw_browse_split = 4 " open file in previous window
 let g:netrw_altv = 1
 let g:netrw_winsize = 25 " width of dir explorer
 augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -339,4 +368,4 @@ let g:syntastic_pug_checkers = ['jade','pug']
 " Other
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:sneak#streak = 1
-let g:airline_theme='bubblegum'
+let g:airline_theme='violet'
