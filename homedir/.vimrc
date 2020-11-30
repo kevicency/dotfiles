@@ -36,6 +36,7 @@ Plugin 'tpope/vim-sensible'
 Plugin 'justinmk/vim-sneak'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-abolish'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'editorconfig/editorconfig-vim'
 " visual undo list
@@ -70,6 +71,7 @@ Plugin 'SuperTab'
 Plugin 'posva/vim-vue'
 
 Plugin 'tomasiser/vim-code-dark'
+Plugin 'bkad/CamelCaseMotion'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -93,6 +95,7 @@ filetype plugin indent on    " required
 colorscheme codedark
 setlocal spell spelllang=en_us
 setlocal spellfile=$HOME/.vim-spell-en.utf-8.add
+set nospell
 autocmd BufRead,BufNewFile *.md,*.txt setlocal spell  " enable spell check for certain files
 " set UTF-8 encoding
 set enc=utf-8
@@ -241,6 +244,12 @@ function! SuperRetab(width) range
     silent! exe a:firstline . ',' . a:lastline . 's/\v%(^ *)@<= {'. a:width .'}/\t/g'
 endfunction
 
+function! s:VSetSearch()
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g') let @s = temp
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -258,10 +267,10 @@ vnoremap <tab> %
 nmap <C-j> ]m
 nmap <C-k> [m
 
-nnoremap { [{
-nnoremap [{ {
-nnoremap } ]}
-nnoremap ]} }
+" nnoremap { [{
+" nnoremap [{ {
+" nnoremap } ]}
+" nnoremap ]} }
 
 noremap ` '
 noremap ' `
@@ -274,6 +283,30 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+" Move between split windows by using the four directions H, L, I, N
+nnoremap <silent> <C-h> <C-w>h
+nnoremap <silent> <C-l> <C-w>l
+nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <C-j> <C-w>j
+
+" Create window splits easier.
+nnoremap <silent> vv <C-w>v
+nnoremap <silent> ss <C-w>s
+
+" map <silent> W <Plug>CamelCaseMotion_w
+" map <silent> B <Plug>CamelCaseMotion_b
+" map <silent> E <Plug>CamelCaseMotion_e
+" map <silent> gE <Plug>CamelCaseMotion_ge
+" sunmap W
+" sunmap B
+" sunmap E
+" sunmap gE
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Useful abbrevs
