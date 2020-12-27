@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/.dotfiles/oh-my-zsh
 # if you want to use this, change your non-ascii font to Droid Sans Mono for Awesome
@@ -6,28 +13,6 @@ export ZSH=$HOME/.dotfiles/oh-my-zsh
 export ZSH_THEME="powerlevel10k/powerlevel10k"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# export ZSH_THEME="agnoster"
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-# # https://github.com/bhilburn/powerlevel9k#customizing-prompt-segments
-# # https://github.com/bhilburn/powerlevel9k/wiki/Stylizing-Your-Prompt
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vi_mode)
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(nvm vcs dir_writable history status)
-# # colorcode test
-# # for code ({000..255}) print -P -- "$code: %F{$code}This is how your text would look like%f"
-# POWERLEVEL9K_NVM_FOREGROUND='000'
-# POWERLEVEL9K_NVM_BACKGROUND='072'
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-# POWERLEVEL9K_SHORTEN_DELIMITER=""
-# POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-# POWERLEVEL9K_VI_INSERT_MODE_STRING="❱❱"
-# POWERLEVEL9K_VI_COMMAND_MODE_STRING="❰ "
-# POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='234'
-# POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='002'
-# POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='234'
-# POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='001'
-# POWERLEVEL9K_SHOW_CHANGESET=true
-#export ZSH_THEME="random"
 
 # Set to this to use case-sensitive completion
 export CASE_SENSITIVE="false"
@@ -63,5 +48,15 @@ unsetopt correct
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
+bindkey '^@' autosuggest-accept
+# bindkey '^M' autosuggest-execute
+bindkey '\x1e\x58' autosuggest-execute
+
 bindkey '^[[[CA' autosuggest-accept
 bindkey '^[[[CE' autosuggest-execute
+
+eval $(gdircolors)
+
+alias rmrf="rm -rf"
+
+[[ ! -f ~/.local.zsh ]] || source ~/.local.zsh

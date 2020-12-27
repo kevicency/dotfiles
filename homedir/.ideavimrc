@@ -11,6 +11,7 @@ set textobj-entire
 set textobj-entire
 set sneak
 set ideajoinset 
+
 clipboard+=ideaput
 
 " map <Leader> <Plug>(easymotion-prefix)
@@ -20,3 +21,21 @@ map <Leader>k <Plug>(easymotion-k)
 nmap <C-s> <Plug>(easymotion-s)
 nmap <C-f> <Plug>(easymotion-f2)
 nnoremap <CR> :noh<CR><CR>
+
+nnoremap <C-o> :action Back<CR>
+nnoremap <C-i> :action Forward<CR>
+nnoremap g; :action JumpToLastChange<CR>
+nnoremap g, :action JumpToNextChange<CR>
+
+imap <C-w> :action EditorSelectWord<CR> 
+
+vmap S <Plug>VSurround
+vmap * "vy/<C-r>v
+
+set visualbell
+set noerrorbells
+
+unmap f 
+unmap F
+unmap t
+unmap T

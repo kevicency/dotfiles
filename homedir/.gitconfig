@@ -48,22 +48,35 @@
   # prevent crlf (then you will have to deal with the problem -- dos2unix, etc)
   #safecrlf = true
   editor = vim
+	pager = less -F -X
   #editor = subl -w
 
 [alias]
   # most commonly used
   co = checkout
   d = diff --color-words
-  cam = commit -a -m
+  cM = commit -a -m
   upm = !git fetch upstream && git merge upstream/master
   # new standard to replace the deprecated git-up gem package:
   up = pull --rebase --autostash
+  ups = !git pull --rebase --prune $@ && git submodule update --init --recursive
+
+  save = !git add -A && git commit -m 'SAVEPOINT'
+  wip = commit -am "WIP"
+  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+  undo = reset HEAD~1 --mixed
+  amend = commit -a --amend
+
+  bclean = "!f() { DEFAULT=$(git default); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
+  bdone = "!f() { DEFAULT=$(git default); git checkout ${1-$DEFAULT} && git up && git bclean ${1-$DEFAULT}; }; f"
+  default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
 
   # least used
   br = branch -a
   s = status -s -u
   cl = log --stat -C -2
   c = commit
+  cm = !git add -A && git commit -m
   dh = diff HEAD
   dc = diff --staged
   dw = diff --word-diff
@@ -78,7 +91,7 @@
   lg = log --graph
   lpo = log --pretty=oneline --abbrev-commit --graph --decorate --all
   l1 = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  l2 = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  l = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   spull = !git-svn fetch && git-svn rebase
   spush = !git-svn dcommit
   sync = !git pull && git push
@@ -109,8 +122,9 @@
   testecho2 = !sh -c 'echo without slash: zero=$0 one=$1 two=$2'
   # te2 RESULT: without slash: zero=A one=B two=C
   st = status
-  l = log --stat -C
-  ll = log --stat -C -3
+  lv = log --stat -C
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
   servehere = daemon --verbose --informative-errors --reuseaddr --export-all --base-path=. --enable=receive-pack
   purgeme = !git clean -fd && git reset --hard
   prunenow = gc --prune=now
@@ -150,6 +164,8 @@
   cob = checkout -b
   sno = show --name-only
   logsimple = log --graph --abbrev-commit --pretty=oneline --all --decorate
+
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
 [apply]
   whitespace = nowarn
 
@@ -157,28 +173,37 @@
   #Enable the recording of resolved conflicts, so that identical hunks can be resolved automatically later on
   enabled = 1
 
-[difftool]
-  prompt = false
+# [difftool]
+#   prompt = false
 
-[diff]
-  tool = vimdiff
+# [diff]
+#   tool = vimdiff
 
 [init]
   templatedir = ~/.dotfiles/.git_template
 
-[mergetool]
-  prompt = false
-  keepBackup = false
+# [mergetool]
+#   prompt = false
+#   keepBackup = false
 
+# [merge]
+#   tool = vimdiff
+#   # Always show a diffstat at the end of a merge
+#   stat = true
+#   conflictstyle = diff3
+
+[diff]
+  tool = vscode
 [merge]
-  tool = vimdiff
-  # Always show a diffstat at the end of a merge
-  stat = true
-  conflictstyle = diff3
+  tool = vscode
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
 
 [branch]
     # Automatically set up pull to be --rebase
-    # autosetuprebase = always
+  autosetuprebase = always
 
 [credential]
     # cache creds (git help credential-cache)
@@ -200,3 +225,5 @@
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+[pull]
+	rebase = true

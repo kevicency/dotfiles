@@ -272,8 +272,8 @@ nmap <C-k> [m
 " nnoremap } ]}
 " nnoremap ]} }
 
-noremap ` '
-noremap ' `
+" nnoremap ` '
+" nnoremap ' `
 
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
@@ -296,8 +296,8 @@ nnoremap <silent> <C-k> <C-w>k
 nnoremap <silent> <C-j> <C-w>j
 
 " Create window splits easier.
-nnoremap <silent> vv <C-w>v
-nnoremap <silent> ss <C-w>s
+" nnoremap <silent> vv <C-w>v
+" nnoremap <silent> ss <C-w>s
 
 " map <silent> W <Plug>CamelCaseMotion_w
 " map <silent> B <Plug>CamelCaseMotion_b
@@ -307,6 +307,11 @@ nnoremap <silent> ss <C-w>s
 " sunmap B
 " sunmap E
 " sunmap gE
+
+map <Down> <C-n>
+map <Up> <C-p>
+map <Left> ,
+map <Right> ;
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Useful abbrevs
@@ -346,8 +351,8 @@ noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 
 " esformatter
 " type \es to format
-nnoremap <silent> <leader>es :Esformatter<CR>
-vnoremap <silent> <leader>es :EsformatterVisual<CR>
+" nnoremap <silent> <leader>es :Esformatter<CR>
+" vnoremap <silent> <leader>es :EsformatterVisual<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDTree
