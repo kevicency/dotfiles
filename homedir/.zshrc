@@ -58,5 +58,7 @@ bindkey '^[[[CE' autosuggest-execute
 eval $(gdircolors)
 
 alias rmrf="rm -rf"
+alias lg="lazygit"
+alias kit="lazygit"
 
 [[ ! -f ~/.local.zsh ]] || source ~/.local.zsh
