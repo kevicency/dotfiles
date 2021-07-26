@@ -275,8 +275,8 @@ nmap <C-k> [m
 " nnoremap ` '
 " nnoremap ' `
 
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+" cnoremap <C-p> <Up>
+" cnoremap <C-n> <Down>
 
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F

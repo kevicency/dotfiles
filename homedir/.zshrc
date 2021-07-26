@@ -60,5 +60,9 @@ eval $(gdircolors)
 alias rmrf="rm -rf"
 alias lg="lazygit"
 alias kit="lazygit"
+alias -g G="| grep"
+alias -g L="| less"
 
 [[ ! -f ~/.local.zsh ]] || source ~/.local.zsh
+
+export GPG_TTY=$(tty)

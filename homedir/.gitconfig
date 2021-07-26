@@ -1,6 +1,7 @@
 [user]
-  name = Kevin Mees
-  email = kev.mees@gmail.com
+	name = Kevin Mees
+	email = kev.mees@gmail.com
+	signingkey = 938A6630FA35546C
 [github]
   # https://github.com/blog/180-local-github-config
   user = kmees
@@ -94,7 +95,7 @@
   l = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   spull = !git-svn fetch && git-svn rebase
   spush = !git-svn dcommit
-  sync = !git pull && git push
+  sync = !git pull --rebase && git push
   es = !git pull --rebase && git push
   lf = log --pretty=fuller
   ignorechanges = update-index --assume-unchanged
@@ -222,8 +223,15 @@
   smudge = git media smudge %f
 
 [filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
   required = true
+	process = git-lfs filter-process
+
 [pull]
 	rebase = true
+
+[gpg]
+	program = gpg2
+[commit]
+	gpgsign = true
