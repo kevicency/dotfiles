@@ -22,7 +22,7 @@ if [ $? -ne 0 ]; then
   # Keep-alive: update existing sudo time stamp until the script has finished
   while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-  echo "Do you want me to setup this machine to allow you to run sudo without a password?\nPlease read here to see what I am doing:\nhttp://wiki.summercode.com/sudo_without_a_password_in_mac_os_x \n"
+  bot "Do you want me to setup this machine to allow you to run sudo without a password?\nPlease read here to see what I am doing:\nhttp://wiki.summercode.com/sudo_without_a_password_in_mac_os_x \n"
 
   read -r -p "Make sudo passwordless? [y|N] " response
 
@@ -192,6 +192,7 @@ if [[ $? != 0 ]]; then
     error "unable to install homebrew, script $0 abort!"
     exit 2
   fi
+  brew analytics off
 else
   ok
   bot "Homebrew"
@@ -282,6 +283,7 @@ if [[ $response =~ (y|yes|Y) ]];then
   require_brew fontconfig
   ./fonts/install.sh
   brew tap homebrew/cask-fonts
+  require_brew svn #required for roboto
   require_cask font-fontawesome
   require_cask font-awesome-terminal-fonts
   require_cask font-hack
@@ -306,9 +308,6 @@ require_brew nvm
 
 # nvm
 require_nvm stable
-
-# always pin versions (no surprises, consistent dev/build machines)
-npm config set save-exact true
 
 #####################################
 # Now we can switch to node.js mode
@@ -336,7 +335,7 @@ if [[ -z $response || $response =~ ^(n|N) ]]; then
   open /Applications/iTerm.app
   bot "All done"
   exit
-fi 
+fi
 
 ###############################################################################
 bot "Configuring General System UI/UX..."
@@ -361,7 +360,7 @@ ok
 sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 1
 
 # Enable firewall stealth mode (no response to ICMP / ping requests)
-# Source: https://support.apple.com/kb/PH18642
+# Source: https://support.apple.com/guide/mac-help/use-stealth-mode-to-keep-your-mac-more-secure-mh17133/mac
 #sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -int 1
 sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -int 1
 
@@ -459,12 +458,12 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -boo
 # running "Disable hibernation (speeds up entering sleep mode)"
 # sudo pmset -a hibernatemode 0;ok
 
-running "Remove the sleep image file to save disk space"
-sudo rm -rf /Private/var/vm/sleepimage;ok
-running "Create a zero-byte file instead"
-sudo touch /Private/var/vm/sleepimage;ok
-running "…and make sure it can’t be rewritten"
-sudo chflags uchg /Private/var/vm/sleepimage;ok
+# running "Remove the sleep image file to save disk space"
+# sudo rm -rf /Private/var/vm/sleepimage;ok
+# running "Create a zero-byte file instead"
+# sudo touch /Private/var/vm/sleepimage;ok
+# running "…and make sure it can’t be rewritten"
+# sudo chflags uchg /Private/var/vm/sleepimage;ok
 
 #running "Disable the sudden motion sensor as it’s not useful for SSDs"
 # sudo pmset -a sms 0;ok
@@ -615,8 +614,8 @@ running "Display ASCII control characters using caret notation in standard text 
 # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
 defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true;ok
 
-running "Disable automatic termination of inactive apps"
-defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true;ok
+# running "Disable automatic termination of inactive apps"
+# defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true;ok
 
 running "Disable the crash reporter"
 defaults write com.apple.CrashReporter DialogType -string "none";ok
@@ -627,11 +626,11 @@ defaults write com.apple.helpviewer DevMode -bool true;ok
 running "Reveal IP, hostname, OS, etc. when clicking clock in login window"
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName;ok
 
-running "Restart automatically if the computer freezes"
-sudo systemsetup -setrestartfreeze on;ok
+# running "Restart automatically if the computer freezes"
+# sudo systemsetup -setrestartfreeze on;ok
 
-running "Never go into computer sleep mode"
-sudo systemsetup -setcomputersleep Off > /dev/null;ok
+# running "Never go into computer sleep mode"
+# sudo systemsetup -setcomputersleep Off > /dev/null;ok
 
 running "Check for software updates daily, not just once per week"
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
@@ -689,8 +688,8 @@ defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true;ok
 
-running "Disable auto-correct"
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false;ok
+# running "Disable auto-correct"
+# defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false;ok
 
 ###############################################################################
 bot "Configuring the Screen"
@@ -1170,8 +1169,8 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 running "Disable smart quotes as it’s annoying for messages that contain code"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false;ok
 
-running "Disable continuous spell checking"
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
+# running "Disable continuous spell checking"
+# defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
 
 ###############################################################################
 bot "SizeUp.app"
@@ -1197,6 +1196,6 @@ for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   killall "${app}" > /dev/null 2>&1
 done
 
-brew update && brew upgrade && brew cleanup && brew cask cleanup
+brew update && brew upgrade && brew cleanup 
 
 bot "Woot! All done"
