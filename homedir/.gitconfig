@@ -48,7 +48,7 @@
   safecrlf = warn
   # prevent crlf (then you will have to deal with the problem -- dos2unix, etc)
   #safecrlf = true
-  editor = vim
+  editor = code
 	pager = less -F -X
   #editor = subl -w
 
@@ -181,6 +181,7 @@
 
 [init]
   templatedir = ~/.dotfiles/.git_template
+	defaultBranch = main
 
 [merge]
     tool = vscode

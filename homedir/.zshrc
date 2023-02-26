@@ -28,7 +28,7 @@ export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.dotfiles/oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(colorize compleat dirpersist autojump git gulp history history-substring-search cp vi-mode yarn vscode zsh-autosuggestions)
+plugins=(colorize compleat dirpersist autojump git gulp history history-substring-search cp vi-mode yarn vscode zsh-autosuggestions kubectl thefuck dotenv pass direnv docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -39,7 +39,7 @@ load-nvmrc() {
   if [[ -f .nvmrc && -r .nvmrc ]]; then
     nvm use &> /dev/null
   else
-    nvm use stable
+    nvm use stable &> /dev/null
   fi
 }
 add-zsh-hook chpwd load-nvmrc
@@ -49,6 +49,9 @@ load-nvmrc
 unsetopt correct
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/Library/Frameworks/Mono.framework/Versions/Current/bin:$PATH"
+export PATH="~/.local/bin:$PATH"
+# export PATH="$PATH:/Users/kev/.dotnet/tools"
 
 bindkey '^@' autosuggest-accept
 # bindkey '^M' autosuggest-execute
@@ -68,3 +71,16 @@ alias -g L="| less"
 [[ ! -f ~/.local.zsh ]] || source ~/.local.zsh
 
 export GPG_TTY=$(tty)
+
+alias godot='/Applications/Godot.app/Contents/MacOS/Godot'
+alias gut='godot --debug-collisions --path $PWD -d -s addons/gut/gut_cmdln.gd'
+alias kl='python3 ~/code/benign-key-logger/key_logger.py'
+
+export DOTNET_ROOT="/usr/local/share/dotnet"
+# export MSBuildSDKsPath="$DOTNET_ROOT/sdk/3.1.416/Sdks"
+# pnpm
+export PNPM_HOME="/Users/kev/Library/pnpm"
+export PATH="$PNPM_HOME:$DOTNET_ROOT:$PATH"
+# pnpm end
+
+alias p='pnpm'

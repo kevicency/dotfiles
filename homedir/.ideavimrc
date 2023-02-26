@@ -1,41 +1,115 @@
-source ~/.vimrc
+" let mapleader=","
 
-set easymotion
+" " set easymotion
+" " set surround
+" " set multiple-cursors
+" " set commentary
+" " set ReplaceWithRegister
+" " set argtextobj
+" " set exchange
+" " set textobj-entire
+" " set textobj-entire
+" " set sneak
+" " set ideajoinset
+" set surround
+" set multiple-cursors
+" set commentary
+" set argtextobj
+" set easymotion
+" set textobj-entire
+" set ReplaceWithRegister
+
+" set clipboard+=ideaput
+
+" " map <Leader> <Plug>(easymotion-prefix)
+" map <leader><Space> <Plug>(easymotion-jumptoanywhere)
+" map <leader>s <Plug>(easymotion-s)
+" map <leader>f <Plug>(easymotion-f2)
+" map <leader>j <Plug>(easymotion-j)
+" map <leader>k <Plug>(easymotion-k)
+" nnoremap <CR> :noh<CR><CR>
+
+" nnoremap <C-o> <Action> Back<CR>
+" nnoremap <C-i> <Action> Forward<CR>
+" nnoremap g; <Action> JumpToLastChange<CR>
+" nnoremap g, <Action> JumpToNextChange<CR>
+
+" imap <C-w> <Action> EditorSelectWord<CR>
+
+" vmap S <Plug>VSurround
+" vmap * "vy/<C-r>v
+
+" set visualbell
+" set noerrorbells
+
+" unmap f
+" unmap F
+" unmap t
+" unmap T
+
+
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
 set surround
 set multiple-cursors
 set commentary
-set ReplaceWithRegister
 set argtextobj
-set exchange
+set easymotion
 set textobj-entire
-set textobj-entire
+set ReplaceWithRegister
 set sneak
-set ideajoinset
+" set which-key
 
-set clipboard+=ideaput
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>,{:}"
 
-" map <Leader> <Plug>(easymotion-prefix)
-map <Leader><Space> <Plug>(easymotion-jumptoanywhere)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-nmap <C-s> <Plug>(easymotion-s)
-nmap <C-f> <Plug>(easymotion-f2)
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set ignorecase " case insensitive by default
+set smartcase " if there are caps, go case-sensitive
+set nu
+" set notimeout
+" set timeoutlen = 5000
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=select
+set selectmode=mouse,ideaselection
+
+"" Mappings --------------------------------
+unmap <leader><leader>
+map <leader>/ <Plug>(easymotion-jumptoanywhere)
+map <leader>s <Plug>(easymotion-s)
+map <leader>f <Plug>(easymotion-f)
+map <leader>t <Plug>(easymotion-t)
+map <leader>j <Plug>(easymotion-j)
+map <leader>k <Plug>(easymotion-k)
+
+map <leader>d <Action>(Debug)
+map <leader>c <Action>(Stop)
+map <leader>e <Action>(SelectInProjectView)
+map <leader>b <Action>(Annotate)
+map <leader>g <Action>(FileStructurePopup)
+
+map <S-Space> <Action>(GotoNextError)
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
+
 nnoremap <CR> :noh<CR><CR>
 
-nnoremap <C-o> :action Back<CR>
-nnoremap <C-i> :action Forward<CR>
-nnoremap g; :action JumpToLastChange<CR>
-nnoremap g, :action JumpToNextChange<CR>
+vmap * "vy/<C-r>
+sunmap s
+sunmap S
+vunmap s
+vunmap S
 
-imap <C-w> :action EditorSelectWord<CR>
+nnoremap <tab> %
+vnoremap <tab> %
 
-vmap S <Plug>VSurround
-vmap * "vy/<C-r>v
-
-set visualbell
-set noerrorbells
-
-unmap f
-unmap F
-unmap t
-unmap T
+" nmap ]m <Action>(GotoNextMethod)
+" nmap [m <Action>(GotoPreviousMethod)

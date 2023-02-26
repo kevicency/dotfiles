@@ -59,8 +59,8 @@
       # node_version          # node.js version
       # go_version            # go version (https://golang.org)
       # rust_version          # rustc version (https://www.rust-lang.org)
-      # dotnet_version        # .NET version (https://dotnet.microsoft.com)
-      rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
+      dotnet_version        # .NET version (https://dotnet.microsoft.com)
+      # rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
       rvm                     # ruby version from rvm (https://rvm.io)
       fvm                     # flutter version management (https://github.com/leoafarias/fvm)
       kubecontext             # current kubernetes context (https://kubernetes.io/)
